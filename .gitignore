@@ -74,3 +74,6 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# Secret spotify client stuff
+spotifyClientData.json

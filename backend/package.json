@@ -1,0 +1,28 @@
+{
+  "name": "spotifysync",
+  "version": "1.0.0",
+  "description": "A server for syncing 2 or more spotify accounts",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emilurenius/spotifySync.git"
+  },
+  "author": "Emil Christiansen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Emilurenius/spotifySync/issues"
+  },
+  "homepage": "https://github.com/Emilurenius/spotifySync#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "spotify-web-api-node": "^5.0.2"
+  }
+}
