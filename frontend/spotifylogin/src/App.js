@@ -6,9 +6,9 @@ import './App.css';
 const cookies = new Cookies()
 
 function url(path) {
-  //const origin = new URL(document.location).origin
-  //return `${origin}${path}`
-  return `http://172.16.4.72:3000${path}`
+  const origin = new URL(document.location).origin
+  return `${origin}${path}`
+  //return `http://172.16.4.72:3000${path}`
 }
 
 function Button(props) {

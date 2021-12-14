@@ -126,6 +126,16 @@ function createClient(clientData) {
     })
 }
 
+function getSlaveClient(clientID) {
+    for (const [k, v] of Object.entries(clients.slaves)) {
+        if (clientID == k) {
+            console.log('Found client')
+            return v.client
+        }
+    }
+    return false
+}
+
 const spotifyAPI = createClient(clientData)
 
 //#endregion spotify functions
@@ -196,6 +206,7 @@ app.get('/spotify/sync/startSession', async (req, res) => {
         songProgress: undefined,
         lastUpdated: undefined
     }
+    res.cookie('sessionName', req.query.session, { maxAge: 86400000, httpOnly: false })
     res.sendStatus(200)
 })
 
@@ -230,6 +241,40 @@ app.get('/spotify/sync/setDelay', async (req, res) => {
     console.log(delay)
 
     res.send(delay)
+})
+
+app.get('/spotify/playlists/getUserPlaylists', async (req, res) => {
+    console.log('Getting user playlists')
+
+})
+
+app.get('/spotify/playlist/getid', async (req, res) => {
+    console.log('Asking for playlist ID')
+    console.log(req.cookies.slaveID)
+    const client = getSlaveClient(req.cookies.slaveID)
+    if (client) {
+        const userData = await client.getMe()
+        const userID = userData.body.id
+        const playlists = await client.getUserPlaylists(userID)
+        //res.send(playlists)
+        console.log(playlists)
+        let playlistFound = false
+        for (const [k, v] of Object.entries(playlists.body.items)) {
+            if (v.name == req.query.playlist) {
+                res.send(v)
+                console.log(v)
+                playlistFound = true
+            }
+        }
+        if (!playlistFound) {
+            console.log(req.query.playlist)
+            res.sendStatus(404)
+        }
+    }
+    else {
+        res.sendStatus(404)
+    }
+    //spotifyAPI.getUser()
 })
 
 //#endregion spotify GET requests
